@@ -34,21 +34,6 @@ Halaman ini adalah implementasi **halaman "Laporan Kerusakan"** dari wireframe T
 └── README.md     # Dokumentasi
 ```
 
-## Cara Menjalankan
-
-1. Unduh atau clone repositori ini:
-   ```bash
-   git clone https://github.com/nama-pengguna/nama-repo.git
-   ```
-2. Buka berkas `index.html` langsung di peramban (double-click), **tidak perlu instalasi apa pun**.
-3. Opsional: jalankan server lokal, misalnya dengan ekstensi *Live Server* di VS Code.
-
-### Mengaktifkan GitHub Pages (opsional)
-
-1. Buka repositori di GitHub → **Settings** → **Pages**.
-2. Pada *Source*, pilih **Deploy from a branch**, lalu branch `main` dan folder `/ (root)`.
-3. Simpan. Situs akan tersedia di `https://nama-pengguna.github.io/nama-repo/`.
-
 ## Keputusan Desain
 
 - **Mobile-first**: lebar maksimal 420 px, mengikuti ukuran wireframe; di layar lebar tampil di tengah.
