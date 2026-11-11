@@ -38,7 +38,7 @@ Halaman ini adalah implementasi **halaman "Laporan Kerusakan"** dari wireframe T
 
 1. Unduh atau clone repositori ini:
    ```bash
-   git clone https://github.com/nama-pengguna/nama-repo.git
+   git clone https://github.com/mikael07cts/Implementasi-Koding-Proyek-Aplikasi-KawanKos.git
    ```
 2. Buka berkas `index.html` langsung di peramban (double-click), **tidak perlu instalasi apa pun**.
 3. Opsional: jalankan server lokal, misalnya dengan ekstensi *Live Server* di VS Code.
@@ -47,7 +47,7 @@ Halaman ini adalah implementasi **halaman "Laporan Kerusakan"** dari wireframe T
 
 1. Buka repositori di GitHub → **Settings** → **Pages**.
 2. Pada *Source*, pilih **Deploy from a branch**, lalu branch `main` dan folder `/ (root)`.
-3. Simpan. Situs akan tersedia di `https://nama-pengguna.github.io/nama-repo/`.
+3. Simpan. Situs akan tersedia di `https://mikael07cts.github.io/Implementasi-Koding-Proyek-Aplikasi-KawanKos/`.
 
 ## Keputusan Desain
 
