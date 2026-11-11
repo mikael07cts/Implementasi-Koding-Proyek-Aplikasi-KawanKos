@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Halaman Laporan Kerusakan untuk penghuni kos: buat laporan dan pantau statusnya.">
+  <title>Laporan Kerusakan</title>
+
+  <!-- Dokumen CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Dokumen JavaScript -->
+  <script src="script.js" defer></script>
+  
+</head>
+<body>
+  <div class="app">
+
+    <!-- ========== KOMPONEN 1: Header halaman ========== -->
+    <header class="app-header">
+      <h1>Laporan Kerusakan</h1>
+    </header>
+
+    <main class="app-main">
+
+      <!-- ========== KOMPONEN 2: Tab "Buat Laporan" / "Status Laporan" ========== -->
+      <div class="tabs" role="tablist" aria-label="Menu laporan kerusakan">
+        <button type="button" class="tab is-active" id="tab-buat" role="tab"
+                aria-selected="true" aria-controls="panel-buat" data-tab="buat">
+          Buat Laporan
+        </button>
+        <button type="button" class="tab" id="tab-status" role="tab"
+                aria-selected="false" aria-controls="panel-status" data-tab="status" tabindex="-1">
+          Status Laporan
+          <!-- Lencana jumlah laporan, diisi oleh script.js -->
+          <span class="tab-badge" id="badge-jumlah" hidden>0</span>
+        </button>
+      </div>
+
+      <!-- Panel 1: Form pembuatan laporan -->
+      <section id="panel-buat" class="panel" role="tabpanel" aria-labelledby="tab-buat">
+
+        <!-- ========== KOMPONEN 3: Form laporan dengan validasi ========== -->
+        <form id="form-laporan" class="form" novalidate>
+
+          <div class="field">
+            <label for="fasilitas">Jenis Fasilitas</label>
+            <input type="text" id="fasilitas" name="fasilitas"
+                   list="daftar-fasilitas" autocomplete="off"
+                   placeholder="Pilih dari daftar atau ketik sendiri"
+                   aria-describedby="err-fasilitas" required>
+            <!-- Daftar saran; pengguna tetap boleh mengetik sendiri -->
+            <datalist id="daftar-fasilitas">
+              <option value="Kamar mandi"></option>
+              <option value="AC / kipas angin"></option>
+              <option value="Lampu"></option>
+              <option value="Pintu / kunci"></option>
+              <option value="Keran / saluran air"></option>
+              <option value="Stopkontak / listrik"></option>
+              <option value="WiFi"></option>
+              <option value="Kasur / lemari"></option>
+              <option value="Dapur bersama"></option>
+              <option value="Jendela"></option>
+            </datalist>
+            <p class="error" id="err-fasilitas" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="deskripsi">Deskripsi Masalah</label>
+            <textarea id="deskripsi" name="deskripsi" rows="6" maxlength="300"
+                      placeholder="Ceritakan kerusakan yang kamu temukan"
+                      aria-describedby="err-deskripsi hitung-deskripsi" required></textarea>
+            <div class="field-foot">
+              <p class="error" id="err-deskripsi" role="alert"></p>
+              <span class="counter" id="hitung-deskripsi">0/300</span>
+            </div>
+          </div>
+
+          <!-- ========== KOMPONEN 4: Unggah foto bukti + pratinjau ========== -->
+          <div class="field">
+            <span class="label" id="label-foto">Foto Bukti <em>(opsional)</em></span>
+
+            <!-- Input file asli disembunyikan; dipicu lewat area unggah -->
+            <input type="file" id="input-foto" accept="image/*" hidden>
+
+            <button type="button" class="dropzone" id="area-foto" aria-labelledby="label-foto">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                <circle cx="12" cy="13" r="3.5"/>
+              </svg>
+              <span id="teks-dropzone">Ketuk untuk unggah foto</span>
+            </button>
+
+            <div class="preview" id="preview-foto" hidden>
+              <img id="gambar-preview" alt="Pratinjau foto bukti yang dipilih">
+              <button type="button" class="btn-hapus" id="hapus-foto">Hapus foto</button>
+            </div>
+
+            <p class="error" id="err-foto" role="alert"></p>
+          </div>
+
+          <button type="submit" class="btn-utama" id="tombol-kirim">Kirim Laporan</button>
+        </form>
+      </section>
+
+      <!-- Panel 2: Daftar status laporan -->
+      <section id="panel-status" class="panel" role="tabpanel" aria-labelledby="tab-status" hidden>
+
+        <!-- ========== KOMPONEN 5: Kartu daftar status laporan ========== -->
+        <p class="kosong" id="pesan-kosong">
+          Belum ada laporan. Buat laporan pertamamu di tab <strong>Buat Laporan</strong>.
+        </p>
+        <ul class="daftar-laporan" id="daftar-laporan"></ul>
+        <button type="button" class="btn-sekunder" id="hapus-semua" hidden>Hapus semua laporan</button>
+      </section>
+    </main>
+
+    <!-- ========== KOMPONEN 6: Navigasi bawah ========== -->
+    <nav class="bottom-nav" aria-label="Navigasi utama">
+      <ul>
+        <li>
+          <a href="#" class="nav-item" data-halaman="Beranda">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>
+            </svg>
+            <span>Beranda</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-item" data-halaman="Tagihan &amp; Riwayat">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>
+            </svg>
+            <span>Tagihan &amp; Riwayat</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-item is-active" data-halaman="Laporan Kerusakan" aria-current="page">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/>
+            </svg>
+            <span>Laporan Kerusakan</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-item" data-halaman="Informasi &amp; Pengumuman">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>
+            </svg>
+            <span>Informasi &amp; Pengumuman</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-item" data-halaman="Profil">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+            </svg>
+            <span>Profil</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Notifikasi singkat (toast), diisi oleh script.js -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
